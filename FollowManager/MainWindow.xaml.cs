@@ -1,19 +1,12 @@
 ﻿using Microsoft.Win32;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
-using System.Text;
-using System.Text.Json.Nodes;
+using System.Security.Policy;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Wpf.Ui.Controls;
 
 namespace FollowManager
@@ -33,10 +26,12 @@ namespace FollowManager
 			if (Followers.Text.Trim() != string.Empty || Followed.Text.Trim() != string.Empty)
 			{
 				Compare.IsEnabled = true;
+				Clear.IsEnabled = true;
 			}
 			else
 			{
 				Compare.IsEnabled = false;
+				Clear.IsEnabled = false;
 			}
 		}
 
@@ -45,27 +40,29 @@ namespace FollowManager
 			if (Followers.Text.Trim() != string.Empty || Followed.Text.Trim() != string.Empty)
 			{
 				Compare.IsEnabled = true;
+				Clear.IsEnabled = true;
 			}
 			else
 			{
 				Compare.IsEnabled = false;
+				Clear.IsEnabled = false;
 			}
 		}
 
 		private void Compare_Click(object sender, RoutedEventArgs e)
 		{
-			List<string> listFollowers = new List<string>();
-			List<string> listFollowed = new List<string>();
-			List<string> listUnfollowers = new List<string>();
-			
-			if(Followers.Text.Trim() != string.Empty)
+			List<Tuple<string,string>> listFollowers = new List<Tuple<string, string>>();
+			List<Tuple<string, string>> listFollowed = new List<Tuple<string, string>>();
+			List<Tuple<string, string>> listUnfollowers = new List<Tuple<string, string>>();
+
+			if (Followers.Text.Trim() != string.Empty)
 			{
 				try
 				{
 					var jsonFollowers = JArray.Parse(Followers.Text.Trim());
 					foreach (var list in jsonFollowers)
 					{
-						listFollowers.Add(list["string_list_data"][0]["value"].ToString());
+						listFollowers.Add(new Tuple<string, string>(list["string_list_data"][0]["value"].ToString(), list["string_list_data"][0]["href"].ToString()));
 					}
 
 				}
@@ -88,7 +85,7 @@ namespace FollowManager
 					var jsonFollowed = jsonFollowedContainer.SelectToken("relationships_following").ToList<JToken>();
 					foreach (var list in jsonFollowed)
 					{
-						listFollowed.Add(list["string_list_data"][0]["value"].ToString());
+						listFollowed.Add(new Tuple<string, string>(list["string_list_data"][0]["value"].ToString(), list["string_list_data"][0]["href"].ToString()));
 					}
 				}
 				catch (JsonReaderException jex)
@@ -104,9 +101,8 @@ namespace FollowManager
 			}
 			listUnfollowers.AddRange(listFollowed);
 			listUnfollowers.RemoveAll(item => listFollowers.Contains(item));
-			ResultsWindow results = new ResultsWindow(this, listUnfollowers);
-			this.Hide();
-			results.Show();
+			ResultsWindow results = new ResultsWindow(listUnfollowers);
+			results.ShowDialog();
 		}
 
 		private void OpenFileFollowers_Click(object sender, RoutedEventArgs e)
@@ -190,6 +186,13 @@ namespace FollowManager
 				Console.WriteLine(exc.Message);
 				return;
 			}
+		}
+
+		private void Guide_Click(object sender, RoutedEventArgs e)
+		{
+			AlertWindow popup = new AlertWindow();
+			popup.ShowDialog();
+			Process.Start(new ProcessStartInfo("https://help.instagram.com/181231772500920/") { UseShellExecute = true });
 		}
 	}
 }

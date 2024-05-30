@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Windows;
 using Wpf.Ui.Controls;
 
@@ -10,26 +9,24 @@ namespace FollowManager
 	/// </summary>
 	public partial class ResultsWindow : FluentWindow
 	{
-		MainWindow main;
-		List<string> listUnfollowers = new List<string>();
-		public ResultsWindow(MainWindow main, List<string> listUnfollowersParameter)
+		public ResultsWindow(List<Tuple<string, string>> listUnfollowers)
 		{
 			InitializeComponent();
-			this.main = main;
-			listUnfollowers = listUnfollowersParameter;
+			Owner = Application.Current.MainWindow;
+			WindowStartupLocation = WindowStartupLocation.CenterOwner;
+			Unfollowers.ItemsSource = listUnfollowers;
 		}
 
 		private void CloseButton_Click(object sender, RoutedEventArgs e)
 		{
 			this.Hide();
-			main.Show();
 		}
-
-		private void Unfollowers_Loaded(object sender, RoutedEventArgs e)
+		private void Unfollowers_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
-			foreach(var unfollower in listUnfollowers)
+			if (Unfollowers.SelectedItem is Tuple<string, string> selectedItem)
 			{
-				Unfollowers.Text = Unfollowers.Text + unfollower + "\n";
+				string url = selectedItem.Item2;
+				Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
 			}
 		}
 	}
