@@ -28,30 +28,6 @@ namespace FollowManager
 			InitializeComponent();
 		}
 
-		private void Followers_TextChanged(object sender, TextChangedEventArgs e)
-		{
-			if (Followers.Text.Trim() != string.Empty || Followed.Text.Trim() != string.Empty)
-			{
-				Compare.IsEnabled = true;
-			}
-			else
-			{
-				Compare.IsEnabled = false;
-			}
-		}
-
-		private void Followed_TextChanged(object sender, TextChangedEventArgs e)
-		{
-			if (Followers.Text.Trim() != string.Empty || Followed.Text.Trim() != string.Empty)
-			{
-				Compare.IsEnabled = true;
-			}
-			else
-			{
-				Compare.IsEnabled = false;
-			}
-		}
-
 		private void Compare_Click(object sender, RoutedEventArgs e)
 		{
 			List<string> listFollowers = new List<string>();
