@@ -1,0 +1,41 @@
+﻿<ui:FluentWindow x:Class="FollowManager.ResultsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" 
+        xmlns:local="clr-namespace:FollowManager"
+        mc:Ignorable="d"
+        Background="#000000"
+		WindowStyle="None" Title="Risultati" Height="600" Width="500" ui:WindowBackdropType="Mica" ExtendsContentIntoTitleBar="True">
+	<DockPanel>
+		<ui:TitleBar
+	DockPanel.Dock="Top"
+	Padding="10,0,0,0"
+	Title="Risultati"
+	Height="30"
+	Background="MediumVioletRed"/>
+		<Grid Margin="10,10,10,0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="0.05*"></RowDefinition>
+				<RowDefinition Height="0.85*"></RowDefinition>
+				<RowDefinition Height="0.10*"></RowDefinition>
+			</Grid.RowDefinitions>
+			<Grid Grid.Row="0">
+				<ui:TextBlock>Seguiti che non ti seguono:</ui:TextBlock>
+			</Grid>
+			<Grid Grid.Row="1">
+				<ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+					<ui:TextBlock Name="Unfollowers" Loaded="Unfollowers_Loaded"></ui:TextBlock>
+				</ScrollViewer>
+				
+
+			</Grid>
+			<Grid Grid.Row="2">
+				<WrapPanel VerticalAlignment="Center" HorizontalAlignment="Right">
+					<ui:Button Background="#1484B4" Name="CloseButton" Click="CloseButton_Click">Chiudi</ui:Button>
+				</WrapPanel>
+			</Grid>
+		</Grid>
+	</DockPanel>
+</ui:FluentWindow>

@@ -1,0 +1,76 @@
+﻿<ui:FluentWindow x:Class="FollowManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" 
+        xmlns:local="clr-namespace:FollowManager"
+        mc:Ignorable="d"
+        Background="#000000"
+		WindowStyle="None" Title="FollowManager" Height="600" Width="1000" ui:WindowBackdropType="Mica" ExtendsContentIntoTitleBar="True">
+	<DockPanel>
+		<ui:TitleBar
+	DockPanel.Dock="Top"
+	Padding="10,0,0,0"
+	Title="FollowManager"
+	Height="30"
+	Background="MediumVioletRed"/>
+		<Grid Margin="10,10,10,0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="0.90*"></RowDefinition>
+				<RowDefinition Height="0.10*"></RowDefinition>
+			</Grid.RowDefinitions>
+			<Grid Grid.Row="0">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="0.5*"></ColumnDefinition>
+						<ColumnDefinition Width="0.5*"></ColumnDefinition>
+					</Grid.ColumnDefinitions>
+					<Grid Grid.Column="0"  Margin="0,0,10,0">
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="0.05*"></RowDefinition>
+								<RowDefinition Height="0.95*"></RowDefinition>
+							</Grid.RowDefinitions>
+							<Grid Grid.Row="0">
+								<ui:TextBlock>Json followers:</ui:TextBlock>
+							</Grid>
+							<Grid Grid.Row="1">
+								<ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+									<ui:TextBox Name="Followers" TextChanged="Followers_TextChanged"></ui:TextBox>
+								</ScrollViewer>
+								
+							</Grid>
+						</Grid>
+						
+						
+					</Grid>
+					<Grid Grid.Column="1"  Margin="10,0,0,0">
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="0.05*"></RowDefinition>
+								<RowDefinition Height="0.95*"></RowDefinition>
+							</Grid.RowDefinitions>
+							<Grid Grid.Row="0">
+								<ui:TextBlock>Json seguiti:</ui:TextBlock>
+							</Grid>
+							<Grid Grid.Row="1">
+								<ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+									<ui:TextBox Name="Followed" TextChanged="Followed_TextChanged"></ui:TextBox>
+								</ScrollViewer>
+								
+							</Grid>
+						</Grid>
+					</Grid>
+				</Grid>
+			</Grid>
+			<Grid Grid.Row="1">
+				<WrapPanel VerticalAlignment="Center" HorizontalAlignment="Right">
+					<ui:Button Background="#1484B4" Margin="0,0,10,0" Name="OpenFile" Click="OpenFile_Click">Apri file .zip</ui:Button>
+					<ui:Button Background="#1484B4" Margin="0,0,10,0" Name="Clear" Click="Clear_Click">Cancella</ui:Button>
+					<ui:Button Background="#1484B4" IsEnabled="False" Name="Compare" Click="Compare_Click">Mostra seguiti che non ti seguono</ui:Button>
+				</WrapPanel>
+			</Grid>
+		</Grid>
+	</DockPanel>
+</ui:FluentWindow>
